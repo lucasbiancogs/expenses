@@ -4,6 +4,10 @@ class TransactionForm extends StatelessWidget {
   final titleControler = TextEditingController();
   final valueControler = TextEditingController();
 
+  final void Function(String, double) onSubmit;
+
+  TransactionForm(this.onSubmit);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,8 +43,13 @@ class TransactionForm extends StatelessWidget {
                   ),
                   textColor: Colors.purple,
                   onPressed: () {
-                    print(titleControler.text);
-                    print(valueControler.text);
+                    final title = titleControler.text;
+                    /*
+                    Um jeito muito interessante de tentar realizar uma ação
+                    e se não conseguir atribuir um valor padrão
+                    */
+                    final value = double.tryParse(valueControler.text) ?? 0;
+                    onSubmit(title, value);
                   },
                 ),
               ],
