@@ -15,9 +15,18 @@ class TransactionList extends StatelessWidget {
 
     return Container(
       height: 600,
-      child: SingleChildScrollView(
-        child: Column(children: <Widget>[
-          ...transactions.map((tr) {
+      child: ListView.builder(
+        /*
+        Ao carregar uma lista, dependendo do seu tamanho, pode custar muita memória do celular
+        carregar toda a lista
+
+        O ListView por padrão constrói toda a lista, mesmo que não esteja na tela
+        usando o builder ele constrói por demanda, muito melhor pra listas grandes
+        */
+          itemCount: transactions.length,
+          itemBuilder: (ctx, index) {
+            final tr = transactions[index];
+
             return Card(
               child: Row(
                 children: <Widget>[
@@ -28,17 +37,17 @@ class TransactionList extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                         border: Border.all(
-                      color: Colors.purple,
+                      color: Theme.of(context).primaryColor,
                       width: 2,
                     )),
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      NumberFormat.currency(symbol: 'R\$', decimalDigits: 2)
+                      NumberFormat.currency(customPattern: 'R\$ #.##')
                           .format(tr.value),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.purple),
+                          color: Theme.of(context).primaryColor),
                     ),
                   ),
                   Column(
@@ -56,15 +65,14 @@ class TransactionList extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey[600],
                         ),
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             );
-          }).toList(),
-        ]),
-      ),
+          },
+          ),
     );
   }
 }
