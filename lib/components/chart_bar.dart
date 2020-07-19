@@ -19,45 +19,63 @@ class ChartBar extends StatelessWidget {
     Intl.defaultLocale = 'pt_BR';
     initializeDateFormatting('pt_BR', null);
 
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 20,
-          child: FittedBox(
-            child: Text(
-              NumberFormat.currency(customPattern: '#.##').format(value),
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
-        Container(
-          height: 60,
-          width: 10,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1.0,
-                    ),
-                    color: Color.fromRGBO(220, 220, 220, 1)),
-              ),
-              FractionallySizedBox(
-                heightFactor: percentage,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                  ),
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        /*
+        O LayoutBuilder te da um contexto de onde onde está sendo feito o build
+        com as constraints é possível obter as dimensões do contexto
+        */
+        return Column(
+          children: <Widget>[
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                /*
+                O FittedBox funciona como um flexBox
+                se o contexto dele tiver um dimensionamento definido
+                ajuda a manter a aplicação em um tamanho compatível
+                */
+                child: Text(
+                  NumberFormat.currency(customPattern: '#.##').format(value),
                 ),
-              )
-            ],
-          ),
-        ),
-        SizedBox(height: 5),
-        Text(label.toUpperCase())
-      ],
+              ),
+            ),
+            SizedBox(height: constraints.maxHeight * 0.05),
+            Container(
+              height: constraints.maxHeight * 0.6,
+              width: 10,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 1.0,
+                        ),
+                        color: Color.fromRGBO(220, 220, 220, 1)),
+                  ),
+                  FractionallySizedBox(
+                    heightFactor: percentage,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: constraints.maxHeight * 0.05),
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text(label.toUpperCase()),
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
