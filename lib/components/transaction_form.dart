@@ -1,5 +1,6 @@
 import 'adaptatives/adaptative_date_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 import 'adaptatives/adaptative_text_input.dart';
 import 'adaptatives/adaptative_button.dart';
@@ -15,7 +16,8 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final _titleControler = TextEditingController();
-  final _valueControler = TextEditingController();
+  final _valueControler = MoneyMaskedTextController(decimalSeparator: '.');
+  double valueChanged = 0;
   DateTime _selectedDate = DateTime.now();
 
   _submitForm() {
