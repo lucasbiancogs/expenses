@@ -8,10 +8,15 @@ import 'adaptatives/adaptative_button.dart';
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
 
-  TransactionForm(this.onSubmit);
+  TransactionForm(this.onSubmit) {
+    print('Constructor TransactionForm');
+  }
 
   @override
-  _TransactionFormState createState() => _TransactionFormState();
+  _TransactionFormState createState() {
+    print('createState() _TransactionFormState');
+    return _TransactionFormState();
+  }
 }
 
 class _TransactionFormState extends State<TransactionForm> {
@@ -19,6 +24,31 @@ class _TransactionFormState extends State<TransactionForm> {
   final _valueControler = MoneyMaskedTextController(decimalSeparator: '.');
   double valueChanged = 0;
   DateTime _selectedDate = DateTime.now();
+
+// ...Entendendo métodos de ciclo de vida de um Widget...
+
+  _TransactionFormState() {
+    print('Constructor _TransactionFormState');
+  }
+
+  @override
+  void initState() {
+    print('initState() _TransactionFormState');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    print('didUpdateWidget() _TransactionFormState');
+    print(widget);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    print('dispose() _TransactionFormState');
+    super.dispose();
+  }
 
   _submitForm() {
     final title = _titleControler.text;
@@ -37,6 +67,7 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    print('build() _TransactionFormState');
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
